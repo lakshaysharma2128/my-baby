@@ -203,7 +203,29 @@ h1,h2{text-align:center;padding:20px}
 const today = new Date().getDate();
 const grid = document.querySelector('.grid');
 
-const messages = Array.from({length:21},(_,i)=>`Day ${i+1} ❤️ This moment belongs only to us.`);
+const messages = [ 
+  "Day 1 💕 This moment carries quiet elegance and undeniable strength. Every fold, every still glance feels intentional, like confidence learned through time. It’s the kind of beauty that doesn’t seek validation, yet leaves a lasting impression simply by existing.", 
+  "Day 2 💖 This kiss feels honest and unguarded, like truth spoken without words. No hesitation, no noise just closeness chosen freely. It reminds me that love doesn’t need perfection, only courage, presence, and the willingness to feel deeply.", 
+  "Day 3 💞 Even through distance, this smile reaches straight into my chest. It feels like warmth traveling miles effortlessly. Proof that love isn’t limited by space, but strengthened by recognition two hearts finding each other again and again.", 
+  "Day 4 ❤️ There’s comfort in this stillness, an intimacy built on silence rather than words. It feels like belonging without explanation, where love settles softly into everyday moments and transforms them into something meaningful and deeply personal.", 
+  "Day 5 💓 Snow surrounds us, yet nothing feels cold here. This moment holds warmth created by closeness alone. It’s love standing steady against the elements, turning winter into memory and proving that togetherness can outshine any storm.", 
+  "Day 6 💘 This touch feels instinctive and protective, like care that doesn’t need to be explained. It’s reassurance wrapped in gentleness, reminding me that love often speaks loudest through presence, patience, and quiet acts of devotion.", 
+  "Day 7 💝 There’s hope glowing softly in this moment, mixed with anticipation and trust. It feels like love looking forward instead of back, believing in tomorrow without fear, and choosing faith even when the future remains unwritten.", 
+  "Day 8 💗 This closeness burns with intensitydesire colliding with emotional depth. It’s raw, magnetic, and fearless. Love here isn’t careful or restrained; it’s bold, consuming, and unapologetic about how deeply it wants to be felt.", 
+  "Day 9 💞 Candles flicker as wishes rise quietly into the air. This moment feels wrapped in gratitude and reflection, where love pauses to acknowledge growth, memories, and the simple miracle of being alive together in this exact moment.", 
+  "Day 10 ❤️ This closeness feels sacred, like time slowing to witness something real. Vulnerability lives here, unhidden and unashamed. It’s the kind of moment where the world fades completely, leaving only connection, trust, and shared breath.", 
+  "Day 11 💓 This look carries confidence shaped by identity and grace. It feels grounded, powerful, and self-assured. A reminder that beauty deepens when it carries history, strength, and the quiet pride of knowing who you are.", 
+  "Day 12 💘 This kiss feels slower, softer, and intentional. Like love choosing patience over urgency. There’s comfort in how naturally closeness unfolds, proving that the deepest affection doesn’t rushit stays, lingers, and settles gently.", 
+  "Day 13 💝 This smile holds warmth and mischief at once, playful yet sincere. It reminds me that love isn’t only intensity it’s laughter, ease, and joy. Sometimes happiness lives in moments that don’t try too hard.", 
+  "Day 14 💗 There’s peace in this quiet focus, where comfort and calm exist together. It feels like sharing silence without awkwardness, where love doesn’t demand attention but remains steady, present, and deeply reassuring in the background.", 
+  "Day 15 💞 Snow falls again, but love stands unshaken. This moment feels like warmth blooming in the cold, proving that when hearts align, even the harshest surroundings soften into something gentle and unforgettable.", 
+  "Day 16 ❤️ This touch feels protective and deeply intimate, like love acting on instinct alone. It whispers safety, patience, and care, reminding me that real devotion doesn’t announce itself—it simply stays and holds you when needed.", 
+  "Day 17 💓 There’s innocence and hope glowing softly here, like dreaming with open eyes. This moment feels full of faith, believing that what’s meant will find its way, and that love rewards patience with something lasting.", 
+  "Day 18 💘 This intensity feels electric, almost overwhelming. Desire and emotion blur into something powerful and undeniable. It’s love without restraint, without apology, fully present and fearless about how deeply it wants to connect.", 
+  "Day 19 💝 Lights glow, candles burn, and everything feels intimate despite the celebration. This moment holds gratitude and quiet wishes, reminding me that happiness isn’t always loud it’s often felt most deeply in still reflection.", 
+  "Day 20 💗 This closeness feels infinite, like a promise made without words. Vulnerability meets devotion here, two souls choosing each other completely, knowing that love this certain is never accidental it’s earned, chosen, and protected..", 
+  "Day 21 ❤️ This moment feels like everything finally coming togetherdesire, devotion, surrender. The way those eyes hold me feels inevitable, like love stripped of fear and doubt. If the world ended here, I’d still know this feeling was worth everything. 💖" 
+];
 
 function typeText(el,text){
   el.textContent='';
