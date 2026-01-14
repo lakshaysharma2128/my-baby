@@ -1,0 +1,181 @@
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:'Caveat',cursive;
+  background:radial-gradient(circle at top,#ffd6e8,#ffeef6);
+  overflow-x:hidden;
+  color:#5a2a3c;
+}
+
+h1,h2{
+  text-align:center;
+  padding:20px;
+  letter-spacing:1px;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  gap:16px;
+  padding:20px;
+  grid-template-columns:repeat(2,1fr);
+  position:relative;
+  z-index:2;
+}
+
+@media(min-width:900px){
+  .grid{
+    grid-template-columns:repeat(3,1fr);
+    max-width:1100px;
+    margin:auto;
+  }
+}
+
+/* CARD */
+.card{perspective:1200px}
+
+.inner{
+  position:relative;
+  width:100%;
+  aspect-ratio:3/4;
+  transform-style:preserve-3d;
+  transition:transform .9s cubic-bezier(.4,.2,.2,1);
+}
+
+.card.flip .inner{
+  transform:rotateY(180deg);
+}
+
+.front,.back{
+  position:absolute;
+  inset:0;
+  border-radius:22px;
+  overflow:hidden;
+  backface-visibility:hidden;
+}
+
+.front img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* BACK */
+.back{
+  background:#fff0f6;
+  transform:rotateY(180deg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  padding:16px;
+  text-align:center;
+  line-height:1.45;
+}
+
+/* ✍️ HANDWRITING HEART CURSOR */
+.typing::after{
+  content:'♥';
+  margin-left:4px;
+  color:#ff5fa2;
+  font-size:0.9em;
+  animation:blink 1s infinite;
+}
+
+@keyframes blink{
+  0%,100%{opacity:0.25;}
+  50%{opacity:1;}
+}
+
+/* SUPER BLUR LOCK */
+.locked{
+  filter: blur(20px) brightness(0.3) saturate(0);
+  pointer-events:none;
+}
+
+.lock{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:2.2rem;
+  background:rgba(255,255,255,0.15);
+}
+
+/* 💖 TODAY — soft pulse */
+.today{
+  animation:pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.04)}
+}
+
+/* 💝 FINALE — heartbeat */
+.finale{
+  box-shadow:0 0 35px rgba(255,105,180,0.85);
+  animation:heartbeat 1.8s ease-in-out infinite;
+}
+
+@keyframes heartbeat{
+  0%{transform:scale(1)}
+  20%{transform:scale(1.05)}
+  40%{transform:scale(1)}
+  60%{transform:scale(1.07)}
+  100%{transform:scale(1)}
+}
+
+/* === HEART SHOWER BACKGROUND === */
+.heart-shower{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:0;
+}
+
+/* Individual heart */
+.heart{
+  position:absolute;
+  top:-10%;
+  width:16px;
+  height:16px;
+  background:#ff5fa2;
+  transform:rotate(45deg);
+  animation:fall linear infinite;
+  opacity:0.35;
+}
+
+/* Heart shape */
+.heart::before,
+.heart::after{
+  content:'';
+  position:absolute;
+  width:16px;
+  height:16px;
+  background:#ff5fa2;
+  border-radius:50%;
+}
+
+.heart::before{top:-8px;left:0;}
+.heart::after{left:-8px;top:0;}
+
+/* Falling animation (smooth & romantic) */
+@keyframes fall{
+  from{
+    transform:translateY(-15vh) rotate(45deg);
+  }
+  to{
+    transform:translateY(120vh) rotate(45deg);
+  }
+}
+
+/* RANDOM HEART POSITIONS & SPEED */
+.heart:nth-child(odd){left:10%;animation-duration:14s;}
+.heart:nth-child(even){left:70%;animation-duration:18s;}
+.heart:nth-child(3n){left:30%;animation-duration:16s;}
+.heart:nth-child(4n){left:50%;animation-duration:12s;}
+.heart:nth-child(5n){left:85%;animation-duration:20s;}
