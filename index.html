@@ -19,18 +19,17 @@ body{
   color:#5a2a3c;
 }
 
-body.day21{--cursor-color:#d4af37}
-
 h1,h2{text-align:center;padding:20px}
 
+/* GRID */
 .grid{
   display:grid;
   gap:22px;
   padding:26px;
   grid-template-columns:repeat(2,1fr);
+  position:relative;
   z-index:2;
 }
-
 @media(min-width:900px){
   .grid{
     grid-template-columns:repeat(3,1fr);
@@ -39,8 +38,11 @@ h1,h2{text-align:center;padding:20px}
   }
 }
 
-.card{perspective:1400px}
-
+/* CARD */
+.card{
+  perspective:1400px;
+  position:relative;
+}
 .inner{
   position:relative;
   width:100%;
@@ -48,7 +50,6 @@ h1,h2{text-align:center;padding:20px}
   transform-style:preserve-3d;
   transition:transform .9s cubic-bezier(.4,.2,.2,1);
 }
-
 .card.flip .inner{transform:rotateY(180deg)}
 
 .front,.back{
@@ -77,20 +78,29 @@ h1,h2{text-align:center;padding:20px}
   font-size:24px;
 }
 
+/* ✍️ typing heart cursor */
 .typing::after{
   content:'💖';
   margin-left:6px;
   animation:blink 1s infinite;
   color:var(--cursor-color);
 }
-
 @keyframes blink{50%{opacity:0}}
 
-.locked{
-  filter:blur(22px) brightness(.25);
-  pointer-events:none;
+/* 🔒 HARD LOCK */
+.locked .front img{
+  filter:blur(40px) brightness(0);
+}
+.locked::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:#000;
+  border-radius:26px;
+  z-index:2;
 }
 
+/* lock icon */
 .lock{
   position:absolute;
   inset:0;
@@ -98,29 +108,61 @@ h1,h2{text-align:center;padding:20px}
   align-items:center;
   justify-content:center;
   font-size:2.4rem;
+  z-index:3;
+  color:#fff;
 }
 
-.today{animation:pulse 2.6s infinite}
-@keyframes pulse{
-  50%{transform:scale(1.05)}
+/* 🚫 shake on locked tap */
+.shake{
+  animation:shake .45s;
+}
+@keyframes shake{
+  20%{transform:translateX(-6px)}
+  40%{transform:translateX(6px)}
+  60%{transform:translateX(-4px)}
+  80%{transform:translateX(4px)}
 }
 
-.finale{
-  box-shadow:0 0 45px rgba(255,105,180,.9);
-  animation:heartbeat 1.8s infinite;
+/* 🌑 fade unlock */
+.card.unlocking::after{
+  animation:fadeOutBlack 1.2s ease forwards;
 }
-@keyframes heartbeat{
-  20%{transform:scale(1.05)}
-  60%{transform:scale(1.08)}
+@keyframes fadeOutBlack{
+  from{opacity:1}
+  to{opacity:0}
 }
 
+/* ✨ unlock zoom glow */
+.card.unlocking{
+  animation:unlockZoom .9s ease;
+}
+@keyframes unlockZoom{
+  50%{
+    transform:scale(1.08);
+    box-shadow:0 0 45px rgba(255,105,180,.9);
+  }
+}
+
+/* 🎬 DAY 21 FULLSCREEN */
+.fullscreen{
+  position:fixed!important;
+  inset:0;
+  z-index:999;
+  background:#000;
+  padding:20px;
+}
+.fullscreen .inner{
+  max-width:520px;
+  margin:auto;
+}
+
+/* ❤️ hearts */
 .heart-shower{
   position:fixed;
   inset:0;
   pointer-events:none;
   z-index:0;
 }
-
 .heart{
   position:absolute;
   width:18px;
@@ -130,7 +172,6 @@ h1,h2{text-align:center;padding:20px}
   opacity:.35;
   animation:fall linear infinite;
 }
-
 .heart::before,.heart::after{
   content:'';
   position:absolute;
@@ -159,32 +200,10 @@ h1,h2{text-align:center;padding:20px}
 <div class="grid"></div>
 
 <script>
-const today = 21; // ALL DAYS UNLOCKED
+const today = new Date().getDate();
 const grid = document.querySelector('.grid');
 
-const messages = [
-"Day 1 💕 This moment carries quiet elegance and undeniable strength. Beauty that doesn’t ask to be seen, yet leaves a lasting impression simply by existing.",
-"Day 2 💖 This kiss feels honest and unguarded, like truth spoken without words. Love doesn’t need perfection, only presence and courage.",
-"Day 3 💞 Even through distance, this smile reaches straight into my chest. Love isn’t limited by space when hearts recognize each other.",
-"Day 4 ❤️ Stillness becomes intimacy here. Love settles into ordinary moments and turns them deeply personal.",
-"Day 5 💓 Snow surrounds us, yet love becomes warmth, standing steady against every storm.",
-"Day 6 💘 This touch speaks devotion without explanation—gentle, protective, and constant.",
-"Day 7 💝 Hope glows softly. Love chooses faith even when tomorrow remains unwritten.",
-"Day 8 💗 Intensity meets desire. Love burns unapologetically deep and fearless.",
-"Day 9 💞 Candles flicker as wishes rise. Love pauses to appreciate shared moments.",
-"Day 10 ❤️ Vulnerability lives here, unhidden. The world fades, leaving only connection.",
-"Day 11 💓 Confidence shaped by grace. Beauty deepens with identity.",
-"Day 12 💘 Love slows down, choosing patience over urgency.",
-"Day 13 💝 Love smiles through laughter and ease.",
-"Day 14 💗 Silence feels safe when love is present.",
-"Day 15 💞 Even winter softens when hearts align.",
-"Day 16 ❤️ Devotion stays without needing words.",
-"Day 17 💓 Hope believes what’s meant will find its way.",
-"Day 18 💘 Love without restraint, fully felt.",
-"Day 19 💝 Happiness whispers quietly.",
-"Day 20 💗 Two souls choosing each other endlessly.",
-"Day 21 ❤️ Everything converges here—love undeniable, eternal, and worth everything."
-];
+const messages = Array.from({length:21},(_,i)=>`Day ${i+1} ❤️ This moment belongs only to us.`);
 
 function typeText(el,text){
   el.textContent='';
@@ -201,21 +220,46 @@ function typeText(el,text){
 
 for(let i=1;i<=21;i++){
   const card=document.createElement('div');
-  card.className='card'+(i===21?' finale':'');
+  card.className='card';
+
+  if(i>today) card.classList.add('locked');
+  if(i===21) card.classList.add('finale');
+
   card.innerHTML=`
     <div class="inner">
-      <div class="front"><img src="day${i}.jpg"></div>
+      <div class="front">
+        <img src="day${i}.jpg">
+        ${i>today?'<div class="lock">🔒</div>':''}
+      </div>
       <div class="back"><p></p></div>
     </div>
   `;
+
   card.onclick=()=>{
+    if(card.classList.contains('locked')){
+      card.classList.add('shake');
+      setTimeout(()=>card.classList.remove('shake'),450);
+      return;
+    }
+
+    if(i===21){
+      card.classList.add('fullscreen');
+    }
+
+    if(!card.classList.contains('flip')){
+      card.classList.add('unlocking');
+      setTimeout(()=>card.classList.remove('unlocking'),1200);
+    }
+
     card.classList.toggle('flip');
     const p=card.querySelector('p');
     if(!p.textContent) typeText(p,messages[i-1]);
   };
+
   grid.appendChild(card);
 }
 
+/* hearts spawn */
 const box=document.querySelector('.heart-shower');
 for(let i=0;i<60;i++){
   const h=document.createElement('div');
